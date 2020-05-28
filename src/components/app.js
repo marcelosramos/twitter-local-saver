@@ -2,6 +2,7 @@ import React from 'react'
 
 import { MainContainer, Header, ViewContainer } from './layout'
 import { TweetSaverView } from './views'
+import { GlobalStateProvider } from './global-state-context'
 
 function App() {
   return (
