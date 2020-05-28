@@ -1,0 +1,7 @@
+.header {
+  flex: 0 0 auto;
+  padding: 0 10px;
+}
+.header h1 {
+  margin-bottom: 0;
+}

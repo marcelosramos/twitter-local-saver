@@ -1,0 +1,6 @@
+.viewContainer {  
+  flex: 1 1 auto;
+  padding: 10px;
+  padding-top: 20px;
+  overflow: auto;
+}

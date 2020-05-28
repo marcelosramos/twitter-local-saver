@@ -1,0 +1,44 @@
+.tweetList {
+  font-size: 0.75rem;
+  border: 1px #777 solid;
+  border-radius: 3px;
+  overflow-y: auto;
+}
+
+.tweetList ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  padding: 5px;
+  border-bottom: 1px #ddd solid;
+}
+
+.item .header {
+  align-items: center;
+}
+
+.item .content {
+  padding-left: 5px;
+}
+
+.item .screenName {
+  padding-left: 3px;
+  flex: 1 0 auto;
+}
+
+.item .screenName, .item .date {
+  font-size: 0.725rem;
+}
+
+.item .text {
+  margin: 0;
+  line-height: 1.25;
+  padding-top: 3px;
+}
+
+.avatar {
+  border-radius: 50%;
+}

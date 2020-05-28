@@ -1,0 +1,28 @@
+.tweetSaverView {
+  height: 100%;
+}
+
+.searchColumn {
+  flex: 1 1 50%;
+}
+
+.middleColumn {
+  padding: 10px;
+  flex: 0 0 auto;
+  justify-content: center;
+}
+
+.savedColumn {
+  flex: 1 1 50%;
+}
+
+.middleColumn span {
+  display: block;
+  text-align: center;
+}
+
+.tweetList {
+  width: 100%;
+  flex: 1 1 auto;
+  margin-top: 10px;
+}
