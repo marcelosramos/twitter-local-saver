@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^7.2.1",
     "classnames": "^2.2.6",
     "dom4": "^2.1.5",
+    "express": "^4.17.1",
     "html-react-parser": "^0.10.5",
     "jsonp": "^0.2.1",
     "moment": "^2.26.0",
@@ -21,7 +22,8 @@
     "react-scripts": "3.4.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server",
+    "start:dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
