@@ -19,7 +19,6 @@ function fetchTweets (dispatch, query) {
   if (!query) return
   dispatch({ type: actionTypes.REQUEST_TWEETS })
   jsonp(`${API_BASE_URL}?q=${query}&count=${DEFAULT_COUNT}`, null, (err, json) => {
-    // If I have time I should implement error handling
     if (err) {
       dispatch({ type: actionTypes.FAIL_REQUEST })
     }
