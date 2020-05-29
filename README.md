@@ -11,11 +11,19 @@ Some features were not requested on the original app specification but made a lo
 * A save all feature;
 * Realtime sync with the storage so if the user opens the app in two (or more) different windows both windows will be always in sync.
 
+### Compatibility
+
+The app was tested for the following browsers:
+
+* Internet Explorer 11
+* Microsoft Edge 44
+* Google Chrome 81
+* Mozilla Firefox 76
+* Safari 13
 
 ## How to run it
 
 Before running the app you need to install its dependencies. For that, after cloning the repo or downloading and extracting the zip file, inside the project folder, run:
-
 
 
 ```
