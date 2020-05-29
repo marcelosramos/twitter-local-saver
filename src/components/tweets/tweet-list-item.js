@@ -1,11 +1,13 @@
 import React from 'react'
 import moment from 'moment'
 import parse from 'html-react-parser'
+import { Draggable } from 'react-beautiful-dnd'
+import classnames from 'classnames'
 
 import { FlexRow } from '../layout'
 import css from './tweets.module.css'
 
-function Avatar ({ url }) {
+function Avatar({ url }) {
   return (
     <div>
       <img className={css.avatar} src={url} alt='Avatar' />
@@ -13,20 +15,12 @@ function Avatar ({ url }) {
   )
 }
 
-/*
-  userMentionEntities : [ {
-    start : 57,
-    end : 65,
-    screenName : 'ewarren'
-  } ],
-*/
-
-function linkMentions (text, mentions) {
+function linkMentions(text, mentions) {
   let mentionLinkedText = ''
   let previousEnd = 0
 
-  mentions.forEach(({start, end, screenName}) => {
-    mentionLinkedText += `${text.slice(previousEnd, start)}<a href="https://twitter.com/${screenName}">@${screenName}</a>`
+  mentions.forEach(({ start, end, screenName }) => {
+    mentionLinkedText += `${text.slice(previousEnd, start)}<a href='https://twitter.com/${screenName}' target='_blank'>@${screenName}</a>`
     previousEnd = end
   })
 
@@ -36,7 +30,7 @@ function linkMentions (text, mentions) {
   return parse(mentionLinkedText)
 }
 
-function TweetText({ value, mentions }) { 
+function TweetText({ value, mentions }) {
   const parsedText = linkMentions(value, mentions)
   return (
     <div>
@@ -45,24 +39,29 @@ function TweetText({ value, mentions }) {
   )
 }
 
-function TweetListItem({ tweet }) {
+function TweetListItem({ tweet, index, droppableId }) {
   const { text, createdAt, userMentionEntities } = tweet
   const { name, screenName, profileImageUrlHttps: imageUrl } = tweet.user
   return (
-    <li className={css.item}>
-      <FlexRow>
-        <Avatar url={imageUrl} />
-        <div className={css.content}>
-          <FlexRow className={css.header}>
-            <span><strong>{name}</strong></span>
-            <span className={css.screenName}>@{screenName}</span>
-            <span>{moment(createdAt).format('MMM DD')}</span>
+    <Draggable draggableId={droppableId + tweet.idStr} index={index}>
+      {(provided, snapshot) => (
+        <li className={classnames(css.item, { [css.moving]: snapshot.isDragging })} {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+          <FlexRow>
+            <Avatar url={imageUrl} />
+            <div className={css.content}>
+              <FlexRow className={css.header}>
+                <span><strong>{name}</strong></span>
+                <span className={css.screenName}>@{screenName}</span>
+                <span>{moment(createdAt).format('MMM DD')}</span>
+              </FlexRow>
+              <TweetText value={text} mentions={userMentionEntities} />
+            </div>
           </FlexRow>
-          <TweetText value={text} mentions={userMentionEntities} />
-        </div>
-      </FlexRow>
-    </li>
+        </li>
+      )}
+    </Draggable>
   )
 }
+
 
 export default TweetListItem

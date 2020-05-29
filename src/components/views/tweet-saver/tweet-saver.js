@@ -1,76 +1,108 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCartPlus, faTrash, faEraser } from '@fortawesome/free-solid-svg-icons'
+import classnames from 'classnames'
 
+import { useGlobalState } from '../../global-state-context'
 import { FlexRow, FlexColumn } from '../../layout'
 import SearchBar from '../../search/search-bar'
 import TweetList from '../../tweets/tweet-list'
 import css from './tweet-saver.module.css'
 
-const tweet = {
-  createdAt: 1590647646000,
-  id: 1265894098797498368,
-  text: '@funder: BREAKING: marcelosramos@gmail.com Trump in email “the @crisis we face underscores the necessity for real leadership in the WH.” Biden will g…',
-  user: {
-    name: 'Anna Bellard 🏠😷stay healthy 🍑again!',
-    screenName: 'AnnaBellard6',
-    profileImageUrlHttps: 'https://pbs.twimg.com/profile_images/1239984635456770048/Ha7e6s8k_normal.jpg'
-  },
-  userMentionEntities: []
-}
+function TweetSaver() {
+  const { state, actions } = useGlobalState()
 
-const tweet2 = {
-  createdAt: 1590614266000,
-  id: 1265754092233617409,
-  text: 'aughhhhhhhh   horrifying   this should be illegal\nwheres @ewarren https://t.co/lR6JWmE3GJ',
-  user: {
-    name: 'lou',
-    screenName: 'eliaswatama',
-    profileImageUrlHttps: 'https://pbs.twimg.com/profile_images/864581235460329472/r9UYX3Qt_normal.jpg'
-  },
-  userMentionEntities : [ {
-    start : 57,
-    end : 65,
-    screenName : 'ewarren'
-  } ],
-}
+  function handleStorageEvent(storageEvent) {
+    if (storageEvent.key !== 'savedTweets') return
+    actions.syncFromStorage()
+  }
 
-const fetchedTweets = []
-const savedTweets = []
+  useEffect(() => {
+    actions.syncFromStorage()
+    const eventListener = window.addEventListener('storage', handleStorageEvent, false);
+    return () => window.removeEventListener('storage', eventListener)
+  }, [])
 
-function SearchColumn() {
-  return (
+  const handleDragFromFetchedColumn = (source, destination) => {
+    if (destination.droppableId !== 'savedColumn') return
+    actions.saveTweet(source.index, destination.index)
+  }
+
+  const handleDragFromSavedColumn = (source, destination) => {
+    if (destination.droppableId === 'savedColumn') {
+      return actions.reorderSavedTweets(source.index, destination.index)
+    }
+    if (destination.droppableId === 'trash') {
+      console.log(source.index)
+      return actions.removeTweet(source.index)
+    }
+  }
+
+  const handleDragEnd = ({ source, destination }) => {
+    if (!destination) return
+    if (source.droppableId === 'fetchedColumn') {
+      return handleDragFromFetchedColumn(source, destination)
+    } if (source.droppableId === 'savedColumn') {
+      return handleDragFromSavedColumn(source, destination)
+    }
+  }
+
+  const handleSaveAllClick = () => actions.saveAllTweets()
+
+  const handleResetSavedList = () => actions.removeAllTweets()
+
+  const handleSubmit = query => {
+    actions.fetchTweets(query)
+  }
+
+  const SearchColumn = () => (
     <FlexColumn className={css.searchColumn}>
-      <SearchBar />
-      <TweetList className={css.tweetList} tweets={fetchedTweets} />
+      <SearchBar onSubmit={handleSubmit} isFetching={state.isFetching} />
+      <TweetList className={css.tweetList} tweets={state.fetchedTweets} id='fetchedColumn' />
+      <div className={css.columnFooter} >
+        <button onClick={handleSaveAllClick}>Save All <FontAwesomeIcon icon={faCartPlus} /></button>
+      </div>
     </FlexColumn>
   )
-}
 
-function MiddleColumn() {
-  return (
+  const MiddleColumn = () => (
     <FlexColumn className={css.middleColumn}>
       <span>Drag tweets</span>
       <span>----------></span>
       <span>to save</span>
     </FlexColumn>
   )
-}
 
-function SavedColumn() {
-  return (
+  const SavedColumn = () => (
     <FlexColumn className={css.savedColumn}>
-      <span>Saved Tweets</span>
-      <TweetList className={css.tweetList} tweets={savedTweets} />
-    </FlexColumn>
+      <FlexRow className={css.savedColumnHeader}>
+        <span>Saved Tweets</span>
+        <button onClick={handleResetSavedList}>Reset Saved List <FontAwesomeIcon icon={faEraser} /></button>
+      </FlexRow>
+      <TweetList className={css.tweetList} tweets={state.savedTweets} id='savedColumn' />
+      <Droppable droppableId='trash'>
+        {(provided, snapshot) => (
+          <div
+            className={classnames(css.columnFooter, css.trash, { [css.isDestination]: snapshot.isDraggingOver })}
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            <span>Drag here to delete (saved tweets only) <FontAwesomeIcon icon={faTrash} /></span>
+          </div>
+        )}
+      </Droppable>
+    </FlexColumn >
   )
-}
 
-function TweetSaver() {
   return (
-    <FlexRow className={css.tweetSaverView}>
-      <SearchColumn />
-      <MiddleColumn />
-      <SavedColumn />
-    </FlexRow>
+    <DragDropContext onDragEnd={handleDragEnd}>
+      <FlexRow className={css.tweetSaverView}>
+        <SearchColumn />
+        <MiddleColumn />
+        <SavedColumn />
+      </FlexRow>
+    </DragDropContext>
   )
 }
 

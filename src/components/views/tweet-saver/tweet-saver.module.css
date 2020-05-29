@@ -22,7 +22,37 @@
 }
 
 .tweetList {
-  width: 100%;
-  flex: 1 1 auto;
+  flex: 1 1 100%;
   margin-top: 10px;
+}
+
+.columnFooter {
+  margin-top: 10px;
+  flex: 0 0 100px;
+  border: 1px #777 solid;
+  border-radius: 3px;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.columnFooter span, .columnFooter button {
+  margin: auto;
+  display: block;
+  width: fit-content;
+}
+
+.columnFooter button, .savedColumnHeader button {
+  border-radius: 3px;
+  border: 1px #777 solid;
+  font-size: 1.2rem;
+  padding: 3px;
+}
+.savedColumnHeader {
+align-items: center;
+justify-content: space-between;
+}
+
+.trash.isDestination {
+  background-color: #ddd;
 }

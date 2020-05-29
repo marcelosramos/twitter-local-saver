@@ -5,15 +5,29 @@
   overflow-y: auto;
 }
 
+.tweetList.isDestination {
+  background-color: #ddd;
+}
+
 .tweetList ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
 .item {
   padding: 5px;
   border-bottom: 1px #ddd solid;
+  background-color: #fff;
+}
+
+.item.moving {
+  border: 1px #777 solid;
+  box-shadow: 1px 2px #aaa;
+  border-radius: 3px;
+  background-color: #eee;
+  transition: all 2s ease;
 }
 
 .item .header {
@@ -22,6 +36,7 @@
 
 .item .content {
   padding-left: 5px;
+  flex: 1 1 auto;
 }
 
 .item .screenName {
