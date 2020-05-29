@@ -2,10 +2,10 @@ import React from 'react'
 
 import css from './view-container.module.css'
 
-function ViewContainer({ children }) {
+function ViewContainer ({ children }) {
   return (
     <div className={css.viewContainer}>
-      {children}   
+      {children}
     </div>
   )
 }

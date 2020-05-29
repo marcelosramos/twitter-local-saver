@@ -10,17 +10,17 @@ import SearchBar from '../../search/search-bar'
 import TweetList from '../../tweets/tweet-list'
 import css from './tweet-saver.module.css'
 
-function TweetSaver() {
+function TweetSaver () {
   const { state, actions } = useGlobalState()
 
-  function handleStorageEvent(storageEvent) {
+  function handleStorageEvent (storageEvent) {
     if (storageEvent.key !== 'savedTweets') return
     actions.syncFromStorage()
   }
 
   useEffect(() => {
     actions.syncFromStorage()
-    const eventListener = window.addEventListener('storage', handleStorageEvent, false);
+    const eventListener = window.addEventListener('storage', handleStorageEvent, false)
     return () => window.removeEventListener('storage', eventListener)
   }, [])
 
@@ -60,7 +60,7 @@ function TweetSaver() {
     <FlexColumn className={css.searchColumn}>
       <SearchBar onSubmit={handleSubmit} isFetching={state.isFetching} />
       <TweetList className={css.tweetList} tweets={state.fetchedTweets} id='fetchedColumn' />
-      <div className={css.columnFooter} >
+      <div className={css.columnFooter}>
         <button onClick={handleSaveAllClick}>Save All <FontAwesomeIcon icon={faCartPlus} /></button>
       </div>
     </FlexColumn>
@@ -69,7 +69,7 @@ function TweetSaver() {
   const MiddleColumn = () => (
     <FlexColumn className={css.middleColumn}>
       <span>Drag tweets</span>
-      <span>----------></span>
+      <span>----------&gt;</span>
       <span>to save</span>
     </FlexColumn>
   )
@@ -92,7 +92,7 @@ function TweetSaver() {
           </div>
         )}
       </Droppable>
-    </FlexColumn >
+    </FlexColumn>
   )
 
   return (

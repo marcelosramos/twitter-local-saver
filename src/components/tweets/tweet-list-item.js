@@ -7,7 +7,7 @@ import classnames from 'classnames'
 import { FlexRow } from '../layout'
 import css from './tweets.module.css'
 
-function Avatar({ url }) {
+function Avatar ({ url }) {
   return (
     <div>
       <img className={css.avatar} src={url} alt='Avatar' />
@@ -15,7 +15,7 @@ function Avatar({ url }) {
   )
 }
 
-function linkMentions(text, mentions) {
+function linkMentions (text, mentions) {
   let mentionLinkedText = ''
   let previousEnd = 0
 
@@ -30,7 +30,7 @@ function linkMentions(text, mentions) {
   return parse(mentionLinkedText)
 }
 
-function TweetText({ value, mentions }) {
+function TweetText ({ value, mentions }) {
   const parsedText = linkMentions(value, mentions)
   return (
     <div>
@@ -39,7 +39,7 @@ function TweetText({ value, mentions }) {
   )
 }
 
-function TweetListItem({ tweet, index, droppableId }) {
+function TweetListItem ({ tweet, index, droppableId }) {
   const { text, createdAt, userMentionEntities } = tweet
   const { name, screenName, profileImageUrlHttps: imageUrl } = tweet.user
   return (
@@ -62,6 +62,5 @@ function TweetListItem({ tweet, index, droppableId }) {
     </Draggable>
   )
 }
-
 
 export default TweetListItem

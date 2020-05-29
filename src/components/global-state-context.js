@@ -11,7 +11,7 @@ const initialState = {
   isFetching: false
 }
 
-function GlobalStateProvider({ children }) {
+function GlobalStateProvider ({ children }) {
   const [state, dispatch] = useReducer(tweetReducer, initialState)
   const actions = actionCreators(dispatch)
 
@@ -22,7 +22,7 @@ function GlobalStateProvider({ children }) {
   )
 }
 
-function useGlobalState() {
+function useGlobalState () {
   return useContext(StateContext)
 }
 

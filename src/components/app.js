@@ -4,7 +4,7 @@ import { MainContainer, Header, ViewContainer } from './layout'
 import { TweetSaverView } from './views'
 import { GlobalStateProvider } from './global-state-context'
 
-function App() {
+function App () {
   return (
     <GlobalStateProvider>
       <MainContainer>
@@ -12,7 +12,7 @@ function App() {
         <ViewContainer>
           <TweetSaverView />
         </ViewContainer>
-      </MainContainer>      
+      </MainContainer>
     </GlobalStateProvider>
   )
 }

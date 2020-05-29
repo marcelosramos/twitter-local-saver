@@ -2,10 +2,10 @@ import React from 'react'
 
 import FlexColumn from '../flex-column/flex-column'
 
-function MainContainer({ children }) {
+function MainContainer ({ children }) {
   return (
     <FlexColumn>
-      {children}   
+      {children}
     </FlexColumn>
   )
 }

@@ -1,5 +1,5 @@
 import TweetSaver from './tweet-saver/tweet-saver'
 
-export { 
+export {
   TweetSaver as TweetSaverView
 }

@@ -3,10 +3,10 @@ import classnames from 'classnames'
 
 import css from './flex-column.module.css'
 
-function FlexColumn({ children, className }) {
+function FlexColumn ({ children, className }) {
   return (
     <div className={classnames(css.flexColumn, className)}>
-      {children}   
+      {children}
     </div>
   )
 }

@@ -5,8 +5,7 @@ import { Droppable } from 'react-beautiful-dnd'
 import TweetListItem from './tweet-list-item'
 import css from './tweets.module.css'
 
-
-function TweetList({ tweets, className, id }) {
+function TweetList ({ tweets, className, id }) {
   const tweetListItems = tweets.map((tweet, index) => <TweetListItem tweet={tweet} key={tweet.id} index={index} droppableId={id} />)
   return (
     <Droppable droppableId={id}>

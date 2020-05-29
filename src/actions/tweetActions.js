@@ -15,7 +15,7 @@ const actionTypes = {
   SAVE_ALL_TWEETS: 'SAVE_ALL_TWEETS'
 }
 
-function fetchTweets(dispatch, query) {
+function fetchTweets (dispatch, query) {
   if (!query) return
   dispatch({ type: actionTypes.REQUEST_TWEETS })
   jsonp(`${API_BASE_URL}?q=${query}&count=${DEFAULT_COUNT}`, null, (err, json) => {
@@ -27,12 +27,12 @@ function fetchTweets(dispatch, query) {
   })
 }
 
-function syncFromStorage(dispatch) {
+function syncFromStorage (dispatch) {
   const savedTweets = JSON.parse(window.localStorage.getItem('savedTweets')) || []
   dispatch({ type: actionTypes.SYNC_FROM_STORAGE, payload: savedTweets })
 }
 
-function actionCreators(dispatch) {
+function actionCreators (dispatch) {
   return {
     fetchTweets: query => fetchTweets(dispatch, query),
     saveTweet: (sourceIndex, destinationIndex) => dispatch({ type: actionTypes.SAVE_TWEET, payload: { sourceIndex, destinationIndex } }),
