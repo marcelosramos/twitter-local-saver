@@ -1,6 +1,6 @@
 import jsonp from 'jsonp'
 
-const API_BASE_URL = 'http://tweetsaver.herokuapp.com/'
+const API_BASE_URL = process.env.API_URL
 const DEFAULT_COUNT = 10
 
 const actionTypes = {
